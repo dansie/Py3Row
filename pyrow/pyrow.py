@@ -440,8 +440,7 @@ class PyErg(object):
             length = self.erg.write(self.outEndpoint, csafe, timeout=2000)
         # Checks for USBError 16: Resource busy
         except USBError as e:
-            if e.errno != 19:
-                raise ConnectionError("USB device disconected")
+            raise ConnectionError("USB device disconected")
         #records time when message was sent
         self.__lastsend = datetime.datetime.now()
 
