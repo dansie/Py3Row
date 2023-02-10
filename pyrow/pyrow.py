@@ -154,7 +154,7 @@ class PyErg(object):
     """
     Manages low-level erg communication
     """
-    def __init__(self, erg):
+    def __init__(self, erg, debug=True):
         """
         Configures usb connection and sets erg value
         """
@@ -166,7 +166,8 @@ class PyErg(object):
                 if erg.is_kernel_driver_active(INTERFACE):
                     erg.detach_kernel_driver(INTERFACE)
                 else:
-                    warn("DEBUG: usb kernel driver not on {}".format(sys.platform))
+                    if debug:
+                        warn("DEBUG: usb kernel driver not on {}".format(sys.platform))
             except:
                 raise
 
@@ -178,7 +179,8 @@ class PyErg(object):
             erg.set_configuration() #required to configure USB connection
             #Ubuntu Linux returns 'usb.core.USBError: Resource busy' but rest of code still works
         except USBError as e:
-            warn("DEBUG: usb error whilst setting configuration, {}".format(e))
+            if debug:
+                warn("DEBUG: usb error whilst setting configuration, {}".format(e))
         # except Exception as e:
         #     if not isinstance(e, USBError):
         #         raise e
